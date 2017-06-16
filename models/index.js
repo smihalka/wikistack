@@ -18,7 +18,12 @@ const Page = db.define('page',{
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
     }
-});
+}, {
+  getterMethods: {
+  	route: function() {
+		return '/wiki/' + this.urlTitle;
+	}
+}});
 
 const User = db.define('user',{
   name: {
@@ -32,6 +37,7 @@ const User = db.define('user',{
         }
       }
 });
+
 
 module.exports = {
   Page: Page,

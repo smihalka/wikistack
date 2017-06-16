@@ -29,6 +29,9 @@ nunjucks.configure('views', {noCache: true});
 // });
 
 app.use(routes);
+//app.listen(3000, function () {
+//        console.log('The best team EVER!!!\!');
+//});
 
 indexDB.db.sync({})
 .then(function () {
