@@ -6,9 +6,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  res.send('got to POST /wiki/');
+  res.json(req.body);
+  //res.redirect('/');
 });
-
+// router.post('/wiki', function(req, res, next){
+//
+// });
 router.get('/add', function(req, res, next) {
   res.render('addpage');
 });
