@@ -18,12 +18,23 @@ const Page = db.define('page',{
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
     }
-}, {
-  getterMethods: {
-  	route: function() {
-		return '/wiki/' + this.urlTitle;
-	}
-}});
+},
+  {
+    getterMethods: {
+    	route: function() {
+  		return '/wiki/' + this.urlTitle;
+	   }
+  },
+  hooks: {
+    beforeValidate: function(page){
+      console.log("HELLO");
+      var urlTitle = "";
+      if(page.title){
+       page.urlTitle = page.title.replace(/\s+/gi, '_').replace(/\W/g,'');
+     }
+    }
+  }
+});
 
 const User = db.define('user',{
   name: {

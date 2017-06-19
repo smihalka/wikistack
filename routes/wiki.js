@@ -9,18 +9,33 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  var urlTitle = req.body.title.replace(/\s+/gi, '_').replace(/\W/g,'');
+  // var urlTitle = req.body.title.replace(/\s+/gi, '_').replace(/\W/g,'');
   var page = Page.build({
-	  title: req.body.title, 
-	  urlTitle: urlTitle,
+	  title: req.body.title,
 	  content: req.body.content,
 	  status: req.body.status
   });
   page.save()
-	.then(function() {
-		res.redirect('/wiki/' + urlTitle);
+	.then(function(page) {
+		res.json(page.get('route'));
 	});
 });
+
+router.get('/:urlTitle', function(req, res, next) {
+//  res.send('hit dynamic route at ' + req.params.urlTitle);
+  var page = Page.findAll({
+    where: {
+      urlTitle: req.params.urlTitle
+    }
+  });
+
+  page.then(result => {
+    
+  res.render('layout', {title: result[0].title});
+  })
+
+});
+
 
 router.get('/add', function(req, res, next) {
   res.render('addpage');
